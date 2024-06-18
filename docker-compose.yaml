@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: postgresql
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdb:/var/lib/postgresql/data
+  
+  injection:
+    build:
+      dockerfile: ./Dockerfile
+    container_name: injection
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+  

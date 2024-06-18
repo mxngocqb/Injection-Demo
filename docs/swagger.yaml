@@ -1,0 +1,195 @@
+basePath: /
+definitions:
+  controller.DriverServerResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+  model.Driver:
+    properties:
+      driver_id:
+        type: integer
+      driver_license:
+        type: string
+      driver_name:
+        type: string
+      home_town:
+        type: string
+    required:
+    - driver_id
+    - driver_license
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server for the IoT Project API.
+  title: Injection demo
+  version: "1.0"
+paths:
+  /drivers:
+    get:
+      consumes:
+      - application/json
+      description: Get all drivers from the database and returns them as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of drivers
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+      summary: Get all drivers
+      tags:
+      - Driver
+    post:
+      consumes:
+      - application/json
+      description: Create a new driver
+      parameters:
+      - description: driver object that needs to be added
+        in: body
+        name: driver
+        required: true
+        schema:
+          $ref: '#/definitions/model.Driver'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Create a new driver
+      tags:
+      - Driver
+  /drivers/{driverID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a driver from the database based on its ID.
+      parameters:
+      - description: Driver ID
+        in: path
+        name: driverID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Driver deleted successfully
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+      summary: Delete a driver
+      tags:
+      - Driver
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a driver from the database by its ID and return it as
+        JSON.
+      parameters:
+      - description: Driver ID
+        in: path
+        name: driverID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Driver information
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+      summary: Retrieve a driver by ID
+      tags:
+      - Driver
+    put:
+      consumes:
+      - application/json
+      description: Update information of a driver based on the provided data in JSON
+        format.
+      parameters:
+      - description: Driver ID
+        in: path
+        name: driverID
+        required: true
+        type: string
+      - description: Driver object to be updated
+        in: body
+        name: driver
+        required: true
+        schema:
+          $ref: '#/definitions/model.Driver'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated driver information
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+      summary: Update a driver
+      tags:
+      - Driver
+  /list:
+    get:
+      consumes:
+      - application/json
+      description: Sends ICMP echo requests (list) to the specified Path address.
+      parameters:
+      - description: Path address to list
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: list result
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.DriverServerResponse'
+      summary: list an Path address
+      tags:
+      - list
+schemes:
+- http
+- https
+swagger: "2.0"
